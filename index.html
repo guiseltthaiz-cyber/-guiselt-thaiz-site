@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guiselt Thaiz</title>
+<style>
+  @font-face {
+    font-family: 'Neue Haas Grotesk';
+    src: local('NeueHaasGroteskDisplayPro'), local('Neue Haas Grotesk Display Pro'), local('NeueHaasGrotesk'), local('Neue Haas Grotesk');
+    font-weight: 400 700;
+  }
+  @font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('fonts/cormorant-garamond-latin-300-normal.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('fonts/cormorant-garamond-latin-400-normal.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('fonts/cormorant-garamond-latin-500-normal.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('fonts/cormorant-garamond-latin-600-normal.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('fonts/cormorant-garamond-latin-700-normal.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('fonts/cormorant-garamond-latin-300-italic.woff2') format('woff2');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('fonts/cormorant-garamond-latin-400-italic.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('fonts/cormorant-garamond-latin-600-italic.woff2') format('woff2');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Cormorant Garamond';
+    src: url('fonts/cormorant-garamond-latin-700-italic.woff2') format('woff2');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+  }
+</style>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --black:#1028A8;
+    --off-white:#f5f4f2;
+    --mid:#888;
+    --border:#ddd;
+    --blue:#1028A8;
+    --font-head:'Neue Haas Grotesk','NeueHaasGrotesk','Neue Haas Grotesk Display Pro',Helvetica,Arial,sans-serif;
+    --font-body:'Cormorant Garamond','Cormorant',Georgia,serif;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--font-body);
+    font-weight:400;
+    background:var(--off-white);
+    color:var(--black);
+    font-size:14px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:transparent;pointer-events:none;}
+  .nav-links{display:flex;justify-content:center;gap:4rem;list-style:none;padding:1.6rem 0 0;pointer-events:all;}
+  .nav-links a{font-family:var(--font-head);font-weight:700;font-style:normal;font-size:12px;color:var(--black);text-decoration:none;cursor:pointer;transition:opacity 0.2s;line-height:1;}
+  .nav-links a:hover{opacity:0.45}
+  .nav-links a.active{opacity:1}
+  nav.on-dark .nav-links a{color:#fff}
+  .nav-name{position:fixed;bottom:1.8rem;left:calc(14.75vw + 0.8rem);z-index:100;font-family:var(--font-head);font-weight:700;font-style:normal;font-size:18px;line-height:1;color:var(--black);cursor:pointer;transition:opacity 0.2s;pointer-events:all;}
+  .nav-name:hover{opacity:0.5}
+  .nav-name.on-dark{color:#fff}
+
+  /* PAGES */
+  .page{display:none;min-height:100vh}
+  .page.active{display:block}
+  .page.inner{padding-top:52px}
+
+  /* HOME */
+  #page-home{height:100vh;overflow:hidden;position:relative;padding-top:0;}
+  #page-home img.hero{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;cursor:pointer;}
+
+  /* WORK PAGE */
+  #page-work{padding-top:52px;overflow-x:hidden;}
+
+  /* ── Ghost sequence: staggered layout with below-image captions ── */
+  .ghost-sequence{
+    padding: 0 3vw 8vw;
+  }
+
+  /* A "figure" wraps the image block + its caption below */
+  .ghost-item{
+    position:relative;
+    overflow:hidden;
+    background:#d4d3d1;
+    display:block;
+  }
+
+  /* Series pages: images fill screen height */
+  .ghost-sequence .ghost-item{
+    height:100vh;
+    background:transparent;
+  }
+  .ghost-sequence .ghost-item img{
+    width:auto; height:100%; max-width:100%; display:block;
+    transition:opacity 0.4s ease;
+    object-fit:contain;
+    margin:0 auto;
+  }
+
+  .ghost-item img{
+    width:100%; height:auto; display:block;
+    transition:opacity 0.4s ease;
+  }
+  .ghost-figure:hover .ghost-item img{ opacity:0.88; }
+
+  /* Caption sits below the image, left-aligned, visible on hover */
+  .ghost-caption{
+    display:block;
+    padding:3px 0 0;
+    text-align:left;
+    opacity:0;
+    transition:opacity 0.3s ease;
+    pointer-events:none;
+    line-height:1;
+  }
+  .ghost-figure:hover .ghost-caption{ opacity:1; }
+  .contact-figure .ghost-caption,
+  .info-portrait-figure .ghost-caption{ opacity:1; pointer-events:auto; }
+
+  .ghost-caption-title{
+    display:block;
+    font-family:var(--font-head);
+    font-style:italic;
+    font-weight:700;
+    font-size:8pt;
+    color:var(--black);
+    line-height:1.25;
+    letter-spacing:0;
+  }
+  .ghost-caption-meta{
+    display:block;
+    font-family:var(--font-head);
+    font-style:italic;
+    font-weight:700;
+    font-size:8pt;
+    color:#888;
+    line-height:1.25;
+    margin-top:1px;
+  }
+
+  /* ── All images full-width, stacked ── */
+  .ghost-row{
+    display:block;
+    margin-top:1.6vw;
+    text-align:center;
+  }
+  .ghost-row:first-child{ margin-top:1vw; }
+
+  /* Figure shrinks to image width so caption left-aligns to image edge */
+  .ghost-figure{ display:inline-block; width:75%; cursor:zoom-in; text-align:left; }
+  .ghost-figure .ghost-item { width:100%; }
+
+  /* Series figures: auto-width driven by height */
+  .ghost-sequence .ghost-figure{ width:auto; max-width:100%; }
+  .ghost-sequence .ghost-figure .ghost-item{ width:auto; }
+
+  /* GHOST BITCH statement */
+  .ghost-statement{padding:1.2rem 3vw 4.5rem;}
+  .ghost-statement p{font-size:20px;line-height:2.0;color:var(--black);}
+  img{ cursor:zoom-in; }
+  .series-name{font-family:var(--font-head);font-weight:700;font-style:italic;}
+  .series-body{font-family:var(--font-body);font-weight:400;font-style:normal;}
+
+  /* CUT OFF — slideshow */
+  .cutoff-slideshow{
+    position:relative;
+    width:100%;
+    max-width:560px;
+    margin:2vw auto 0;
+    aspect-ratio:4/5;
+    overflow:hidden;
+  }
+  .cutoff-slide{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    transition:opacity 0.8s ease-in-out;
+    cursor:pointer;
+  }
+  .cutoff-slide.active{ opacity:1; }
+  .cutoff-slide img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+  }
+  .cutoff-slide .ghost-caption{
+    position:absolute;
+    bottom:0.1rem;
+    left:0;
+    opacity:1;
+  }
+  .cutoff-nav{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:1.4rem;
+    padding:0.3rem 0 0;
+  }
+  .cutoff-nav-btn{
+    font-family:var(--font-head);
+    font-weight:700;
+    font-style:italic;
+    font-size:10px;
+    letter-spacing:0.06em;
+    color:var(--mid);
+    cursor:pointer;
+    background:none;
+    border:none;
+    padding:0;
+    transition:color 0.2s;
+  }
+  .cutoff-nav-btn:hover{ color:var(--black); }
+  .cutoff-counter{
+    font-family:var(--font-head);
+    font-weight:700;
+    font-style:italic;
+    font-size:10px;
+    color:var(--mid);
+    min-width:3rem;
+    text-align:center;
+  }
+
+  @media(max-width:768px){
+    
+  }
+  @media(max-width:480px){
+    
+  }
+
+  /* OTHER SERIES */
+  .series-section{border-top:0.5px solid var(--border);}
+  .series-row{position:relative;width:100%;cursor:pointer;overflow:hidden;display:block;}
+  .series-row img{width:100%;height:auto;display:block;transition:opacity 0.35s;}
+  .series-row:hover img{opacity:0.84}
+  .series-row-label{position:absolute;bottom:0;left:0;right:0;padding:2.4rem 2rem 1.5rem;background:linear-gradient(transparent,rgba(0,0,0,0.35));color:#fff;font-size:12px;font-weight:500;pointer-events:none;}
+
+  /* PROJECT DETAIL */
+  .project-header{padding:1.2rem 2rem 0.8rem}
+  .project-title{font-family:var(--font-head);font-size:12px;font-weight:500;color:var(--black);}
+  .project-images{display:flex;flex-direction:column;gap:1px;background:var(--border)}
+  .project-images img{width:100%;height:auto;display:block;cursor:zoom-in;transition:opacity 0.2s;}
+  .project-images img:hover{opacity:0.95}
+
+  /* LIGHTBOX — white, zoomable */
+  .lightbox{display:none;position:fixed;inset:0;z-index:999;background:rgba(255,255,255,0.96);align-items:center;justify-content:center;overflow:hidden;}
+  .lightbox.open{display:flex;}
+
+  #lb-zoom-wrap{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:grab;}
+  #lb-zoom-wrap.dragging{cursor:grabbing;}
+
+  #lightbox-img{max-width:90vw;max-height:90vh;width:auto;height:auto;object-fit:contain;display:block;transform-origin:center center;transform:scale(1) translate(0px,0px);user-select:none;pointer-events:none;}
+
+  .lightbox-close{position:fixed;top:1.1rem;right:1.6rem;font-size:1.6rem;font-weight:300;color:var(--black);cursor:pointer;opacity:0.4;transition:opacity 0.2s;z-index:1000;line-height:1;}
+  .lightbox-close:hover{opacity:1}
+
+  .lightbox-prev,.lightbox-next{position:fixed;top:50%;transform:translateY(-50%);font-size:2.6rem;font-weight:300;color:var(--black);cursor:pointer;opacity:0.55;padding:1rem;transition:opacity 0.2s;z-index:1000;user-select:none;}
+  .lightbox-prev{left:0.4rem}
+  .lightbox-next{right:0.4rem}
+  .lightbox-prev:hover,.lightbox-next:hover{opacity:1}
+
+  .lb-hint{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);font-family:var(--font-head);font-weight:700;font-style:italic;font-size:10px;letter-spacing:0.04em;color:#aaa;pointer-events:none;z-index:1000;transition:opacity 1s;}
+  .lb-hint.hidden{opacity:0;}
+
+  .lb-reset{position:fixed;bottom:1.5rem;right:1.6rem;font-family:var(--font-head);font-weight:700;font-style:italic;font-size:10px;letter-spacing:0.04em;color:#999;cursor:pointer;z-index:1000;opacity:0;transition:opacity 0.3s;}
+  .lb-reset.visible{opacity:1;}
+
+  /* TEXT PAGES */
+  .text-page{max-width:680px;margin:0 auto;padding:3.5rem 2rem}
+  .text-page h2{font-family:var(--font-head);font-size:12px;font-weight:500;color:var(--mid);margin-bottom:2rem;}
+  .text-page p{font-family:var(--font-body);font-size:15px;line-height:1.85;color:var(--black);margin-bottom:1.3rem}
+  .cv-category{font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#aaa;margin:2.2rem 0 0.9rem;}
+  .cv-entry{display:flex;gap:2rem;margin-bottom:0.95rem;font-size:13px}
+  .cv-year{color:var(--mid);min-width:70px}
+  .cv-detail strong{display:block;font-weight:500}
+  .cv-detail span{color:var(--mid);font-size:12px}
+
+  /* CONTACT — minimal */
+  .contact-minimal{display:flex;flex-direction:column;align-items:center;padding-top:3.5rem;gap:0.55rem;}
+  .contact-link{font-family:var(--font-body);font-weight:400;font-style:normal;font-size:18px;color:var(--black);text-decoration:none;line-height:1.6;}
+  .contact-link:hover{opacity:0.45;}
+  .contact-img-wrap{margin-top:1.6rem;width:403px;margin-left:calc(50% - 201px + 25px);margin-right:auto;}
+  .contact-img-wrap img{width:100%;height:auto;display:block;}
+  .contact-img-caption{
+    display:block;
+    margin-top:0.5rem;
+    font-family:var(--font-head);
+    font-weight:700;
+    font-style:italic;
+    font-size:8pt;
+    color:var(--black);
+    line-height:1.4;
+  }
+  .info-portrait-caption{
+    display:block;
+    margin-top:0.5rem;
+    font-family:var(--font-head);
+    font-weight:700;
+    font-style:italic;
+    font-size:8pt;
+    color:var(--black);
+    line-height:1.4;
+    text-align:center;
+  }
+
+  /* WORK INDEX */
+  .work-index{padding:3.5rem 6vw;}
+  .work-index-row{padding:0.15rem 0;cursor:pointer;display:flex;align-items:center;transition:opacity 0.2s;}
+  .work-index-row:hover{opacity:0.45;}
+  .work-index-title{font-family:var(--font-body);font-size:clamp(2.2rem, 5.5vw, 5.5rem);font-weight:700;font-style:italic;color:#1028A8;line-height:1.15;letter-spacing:-0.01em;}
+
+  /* SERIES BACK */
+  .series-page-back{font-family:var(--font-head);font-weight:700;font-style:italic;padding:1rem 6vw 0;font-size:11px;color:var(--mid);cursor:pointer;display:inline-block;letter-spacing:0.02em;}
+  .series-page-back:hover{color:var(--black);}
+
+  /* ═══════════════════════════════════════
+     MOBILE  (≤ 768px)
+  ═══════════════════════════════════════ */
+  @media (max-width:768px){
+
+    /* ── Nav ── */
+    nav{ background:transparent; }
+    .nav-links{
+      gap:2rem;
+      padding:1.1rem 0 0;
+    }
+    .nav-links a{ font-size:11px; }
+
+    /* Artist name: smaller, tighter to corner */
+    .nav-name{
+      font-size:14px;
+      bottom:1.2rem;
+      left:calc(14.75vw + 0.8rem);
+    }
+
+    /* ── Home ── */
+    #page-home img.hero{ object-position:center center; }
+
+    /* ── Work page ── */
+    #page-work{ padding-top:44px; }
+
+    .ghost-sequence{ padding:0 3vw 10vw; }
+
+    .ghost-row{ margin-top:3vw; }
+    .ghost-row:first-child{ margin-top:2vw; }
+
+    /* Captions: always visible on touch (no hover) */
+    .ghost-caption{
+      opacity:1 !important;
+      transform:none !important;
+      pointer-events:auto;
+    }
+
+    .ghost-caption-title{
+      font-size:7.5pt;
+      line-height:1.3;
+    }
+    .ghost-caption-meta{
+      font-size:7.5pt;
+      line-height:1.3;
+    }
+
+    /* Statement */
+    .ghost-statement{ padding:1rem 4vw 6vw; }
+    .ghost-statement p{
+      font-size:14px;
+      line-height:1.85;
+    }
+
+    /* ── Lightbox ── */
+    #lightbox-img{
+      max-width:100vw;
+      max-height:80vh;
+    }
+    .lightbox-close{
+      top:0.7rem;
+      right:1rem;
+      font-size:1.8rem;
+    }
+    .lightbox-prev{
+      left:0;
+      font-size:2.2rem;
+      padding:0.6rem 0.8rem;
+      opacity:0.7;
+    }
+    .lightbox-next{
+      right:0;
+      font-size:2.2rem;
+      padding:0.6rem 0.8rem;
+      opacity:0.7;
+    }
+    .lb-hint{ font-size:9px; bottom:1rem; }
+
+    /* ── Text pages ── */
+    .text-page{
+      padding:2.5rem 1.4rem;
+    }
+    .text-page h2{ margin-bottom:1.4rem; }
+    .text-page p{ font-size:13px; }
+
+    /* CV two-column → single column */
+    .cv-entry{ flex-direction:column; gap:0.2rem; }
+    .cv-year{ min-width:auto; }
+
+    /* Contact grid → single column */
+  }
+
+  /* ── INFORMATION PAGE ─────────────────────── */
+  .info-page{
+    padding:3.5rem 0 6rem;
+    /* leave room on the right for the fixed portrait (631px) + its right indent (3vw) + gap (2vw) */
+    margin-right:calc(631px + 12vw);
+    margin-left:4vw;
+  }
+
+  .info-main-layout{ display:block; }
+  .info-left{ min-width:0; }
+
+  /* Fixed portrait: pinned to right side of viewport, vertically centred, indented from edge */
+  #info-portrait-bg{
+    display:none;
+    position:fixed;
+    top:0;
+    right:10vw;
+    bottom:0;
+    width:631px;
+    z-index:10;
+    pointer-events:all;
+    align-items:center;
+    justify-content:center;
+  }
+  #info-portrait-bg img{
+    width:100%;
+    height:auto;
+    display:block;
+    opacity:1;
+    cursor:zoom-in;
+  }
+  #page-information.active #info-portrait-bg{ display:flex; }
+  #page-information .info-page{ position:relative; z-index:2; }
+
+  @media(max-width:900px){
+    #info-portrait-bg{ width:48vw; right:6vw; }
+    .info-page{ margin-right:calc(48vw + 8vw); margin-left:3vw; }
+  }
+
+  /* CV section header */
+  .info-section-head{
+    font-family:var(--font-head);
+    font-weight:700;font-style:italic;font-size:11px;
+    letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--mid);
+    margin-bottom:2.8rem;
+    padding-bottom:0.6rem;
+    border-bottom:0.5px solid var(--border);
+  }
+
+  /* Each category block */
+  .info-cv-block{margin-bottom:2.4rem;}
+  .info-cv-cat{
+    font-family:var(--font-head);
+    font-weight:700;font-style:italic;font-size:9px;
+    letter-spacing:0.16em;text-transform:uppercase;
+    color:#aaa;
+    margin-bottom:0.9rem;
+  }
+
+  /* Each entry row */
+  .info-cv-row{
+    display:grid;
+    grid-template-columns:52px 1fr;
+    gap:1.4rem;
+    margin-bottom:0.45rem;
+    align-items:baseline;
+  }
+  .info-cv-year{
+    font-family:var(--font-body);
+    font-size:18px;font-weight:400;font-style:italic;
+    color:var(--mid);line-height:1.7;
+    white-space:nowrap;
+  }
+  .info-cv-text{
+    font-family:var(--font-body);
+    font-size:18px;font-weight:400;font-style:italic;
+    color:var(--black);line-height:1.7;
+  }
+    .info-bio-text{
+    font-family:var(--font-body);
+    font-size:18px;font-weight:400;font-style:italic;
+    color:var(--black);line-height:1.7;
+  }
+  
+  
+  
+  .info-cv-sub{
+    display:block;
+    color:var(--mid);
+    font-size:10.5px;
+  }
+
+  @media(max-width:900px){
+    #info-portrait-bg{ width:48vw; }
+    .info-page{ margin-right:calc(48vw + 3vw); margin-left:3vw; }
+  }
+  @media(max-width:640px){
+    #info-portrait-bg{ display:none !important; }
+    .info-page{ margin-right:4vw; margin-left:4vw; padding:2.5rem 0 5rem; }
+  }
+
+  @media (max-width:480px){
+    .nav-links{ gap:1.4rem; }
+    .nav-links a{ font-size:10.5px; }
+    .nav-name{ font-size:13px; }
+    .ghost-row{ margin-top:4vw; }
+    .ghost-statement p{ font-size:13px; line-height:1.8; }
+    .series-row-label{ font-size:11px; padding:1.6rem 1.2rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <ul class="nav-links">
+    <li><a onclick="showPage('work')"        id="nav-work">Work</a></li>
+    <li><a onclick="showPage('information')" id="nav-information">Information</a></li>
+    <li><a onclick="showPage('contact')"     id="nav-contact">Contact</a></li>
+  </ul>
+</nav>
+<span class="nav-name on-dark" id="nav-name" onclick="showPage('home')">Guiselt Thaiz</span>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lb-close">&times;</span>
+  <span class="lightbox-prev" id="lb-prev">&#8249;</span>
+  <div id="lb-zoom-wrap">
+    <img id="lightbox-img" src="" alt="" draggable="false">
+  </div>
+  <span class="lightbox-next" id="lb-next">&#8250;</span>
+  <span class="lb-hint" id="lb-hint">Scroll or pinch to zoom &nbsp;&middot;&nbsp; drag to pan &nbsp;&middot;&nbsp; esc to close</span>
+  <span class="lb-reset" id="lb-reset">reset zoom</span>
+</div>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <img class="hero" src="images/homapage/ghost_main.jpg" alt="Guiselt Thaiz" onclick="showPage('work')">
+</div>
+
+<!-- WORK INDEX -->
+<div id="page-work" class="page inner">
+  <div class="work-index">
+    <div class="work-index-row" onclick="showSeries('ghost')"><span class="work-index-title">Ghost Bitch</span></div>
+    <div class="work-index-row" onclick="showSeries('paintings')"><span class="work-index-title">The Good Sister</span></div>
+    <div class="work-index-row" onclick="showSeries('forest')"><span class="work-index-title">Forest at Night</span></div>
+    <div class="work-index-row" onclick="showSeries('cutoff')"><span class="work-index-title">Cut Off</span></div>
+    <div class="work-index-row" onclick="showSeries('blind')"><span class="work-index-title">Blind Frequencies</span></div>
+    <div class="work-index-row" onclick="showSeries('crab')"><span class="work-index-title">Eye of the Crab</span></div>
+    <div class="work-index-row" onclick="showSeries('jay')"><span class="work-index-title">Jay Chews Her Gum</span></div>
+  </div>
+</div>
+
+<!-- SERIES: Ghost Bitch -->
+<div id="page-series-ghost" class="page inner">
+  <div class="series-page-back" onclick="showPage('work')">← Work</div>
+  <div class="ghost-sequence">
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(ghostImgs,0)"><div class="ghost-item"><img src="images/work/Ghost Bitch/ghost_main.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Ghost Bitch, 2025</span><span class="ghost-caption-meta">Steel</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(ghostImgs,1)"><div class="ghost-item"><img src="images/work/Ghost Bitch/ghost_g3.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Ghost Bitch II, 2025</span><span class="ghost-caption-meta">Steel, 20 × 20 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(ghostImgs,2)"><div class="ghost-item"><img src="images/work/Ghost Bitch/ghost_g1.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Ghost Bitch I, 2025</span><span class="ghost-caption-meta">Steel, 25 × 20 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(ghostImgs,3)"><div class="ghost-item"><img src="images/work/Ghost Bitch/ghost_g2.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Ghost Bitch III, 2025</span><span class="ghost-caption-meta">Steel, 25 × 20 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(ghostImgs,4)"><div class="ghost-item"><img src="images/work/Ghost Bitch/ghost_g4.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Ghost Bitch IV, 2025</span><span class="ghost-caption-meta">Steel, 20 × 20 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(ghostImgs,5)"><div class="ghost-item"><img src="images/work/Ghost Bitch/ghost_g5.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Ghost Bitch VI, 2025</span><span class="ghost-caption-meta">Steel, 25 × 30 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(ghostImgs,6)"><div class="ghost-item"><img src="images/work/Ghost Bitch/ghost_g6.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Ghost Bitch VII, 2025</span><span class="ghost-caption-meta">Steel, 25 × 30 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(ghostImgs,7)"><div class="ghost-item"><img src="images/work/Ghost Bitch/ghost_g7.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Ghost Bitch VIII, 2025</span><span class="ghost-caption-meta">Steel, 25 × 20 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(ghostImgs,8)"><div class="ghost-item"><img src="images/work/Ghost Bitch/ghost_g8.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Ghost Bitch IX, 2025</span><span class="ghost-caption-meta">Steel, 25 × 20 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(ghostImgs,9)"><div class="ghost-item"><img src="images/work/Ghost Bitch/ghost_g9.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Ghost Bitch X, 2025</span><span class="ghost-caption-meta">Steel, 25 × 30 cm</span></div></figure></div>
+  </div>
+  <div class="ghost-statement">
+    <p><span class="series-name">Ghost Bitch</span><span class="series-body"> is a series shaped through direct confrontation with metal. Each sheet is worked by repeated strikes of tools, leaving dents, folds, and scars that testify to the intensity of the encounter. The surface shifts between hardness and vulnerability, and as light moves across it, the work changes, becoming a different piece in each moment. This transformation gives a sense of temporality, as if the scars could disappear or reveal new ones. The process is not about control but about dialogue with resistance; the force of the blow, the yielding of matter, the trace that remains. In this exchange, the material itself becomes voice and body, carrying memory of impact. What emerges are forms that stand both strong, sensitive and defiant, where every mark is evidence of time, endurance, and transformation.</span></p>
+  </div>
+  <div style="border-top:0.5px solid var(--border);"></div>
+  <div class="ghost-sequence">
+    <div class="ghost-row" style="margin-top:2vw;"><figure class="ghost-figure" onclick="openLightbox(vailedImgs,0)"><div class="ghost-item"><img src="images/work/Ghost Bitch/TWO_VAILED_FIGURE1.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Two Vailed Figures, 2025</span><span class="ghost-caption-meta">Ceramic, 20 × 12 × 2 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(vailedImgs,1)"><div class="ghost-item"><img src="images/work/Ghost Bitch/TWO_VAILED_FIGURE2.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Two Vailed Figures, 2025</span><span class="ghost-caption-meta">Ceramic, 20 × 12 × 2 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(vailedImgs,2)"><div class="ghost-item"><img src="images/work/Ghost Bitch/image-asset.jpeg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Little Mascaron, 2025</span><span class="ghost-caption-meta">Ceramic, human hair, 10 × 10 cm</span></div></figure></div>
+  </div>
+  <div class="ghost-statement" style="max-width:640px;text-align:center;margin-left:auto;margin-right:auto;">
+    <p><span class="series-name">Mascaron</span><span class="series-body"> — a face mask that adorns a non anthropomorphic structure, such as architecture, clothing, furniture, or a beehive — is endowed with magical powers to ward off evil spirits.</span></p>
+  </div>
+</div>
+
+<!-- SERIES: Cut Off -->
+<div id="page-series-cutoff" class="page inner">
+  <div class="series-page-back" onclick="showPage('work')">← Work</div>
+  <div class="cutoff-slideshow" id="cutoff-slideshow">
+    <div class="cutoff-slide active" onclick="openLightbox(cutOffImgs,0)">
+      <img src="images/work/Cut off/guiselt_thaiz_Cut_Off_01_28cmx35cm.jpeg" alt="">
+      <div class="ghost-caption"><span class="ghost-caption-title">Cut Off 01, 2025</span><span class="ghost-caption-meta">Self made pigments, gold leaf, spirulina, pastels on canvas. 28 × 35 cm</span></div>
+    </div>
+    <div class="cutoff-slide" onclick="openLightbox(cutOffImgs,1)">
+      <img src="images/work/Cut off/guiselt_thaiz_Cut_Off_07_28cmx35cm.jpeg.jpeg" alt="">
+      <div class="ghost-caption"><span class="ghost-caption-title">Cut Off 07, 2025</span><span class="ghost-caption-meta">Self made pigments, gold leaf, spirulina, pastels on canvas. 28 × 35 cm</span></div>
+    </div>
+    <div class="cutoff-slide" onclick="openLightbox(cutOffImgs,2)">
+      <img src="images/work/Cut off/guiselt_thaiz_Cut_Off_08_28cmx35cm.jpeg.jpeg" alt="">
+      <div class="ghost-caption"><span class="ghost-caption-title">Cut Off 08, 2025</span><span class="ghost-caption-meta">Self made pigments, gold leaf, spirulina, pastels on canvas. 28 × 35 cm</span></div>
+    </div>
+    <div class="cutoff-slide" onclick="openLightbox(cutOffImgs,3)">
+      <img src="images/work/Cut off/guiselt_thaiz_Cut_Off_10_28cmx35cm.jpeg.jpeg" alt="">
+      <div class="ghost-caption"><span class="ghost-caption-title">Cut Off 10, 2025</span><span class="ghost-caption-meta">Self made pigments, gold leaf, spirulina, pastels on canvas. 28 × 35 cm</span></div>
+    </div>
+    <div class="cutoff-slide" onclick="openLightbox(cutOffImgs,4)">
+      <img src="images/work/Cut off/cut_off_main.jpg" alt="">
+      <div class="ghost-caption"><span class="ghost-caption-title">Cut Off, 2025</span><span class="ghost-caption-meta">Self made pigments, gold leaf, spirulina, pastels on canvas. 28 × 35 cm</span></div>
+    </div>
+    <div class="cutoff-slide" onclick="openLightbox(cutOffImgs,5)">
+      <img src="images/work/Cut off/cut_off_g4.jpg" alt="">
+      <div class="ghost-caption"><span class="ghost-caption-title">Cut Off 02, 2025</span><span class="ghost-caption-meta">Self made pigments, gold leaf, spirulina, pastels on canvas. 28 × 35 cm</span></div>
+    </div>
+    <div class="cutoff-slide" onclick="openLightbox(cutOffImgs,6)">
+      <img src="images/work/Cut off/cut_off_g6.jpg" alt="">
+      <div class="ghost-caption"><span class="ghost-caption-title">Cut Off 03, 2025</span><span class="ghost-caption-meta">Self made pigments, gold leaf, spirulina, pastels on canvas. 28 × 35 cm</span></div>
+    </div>
+    <div class="cutoff-slide" onclick="openLightbox(cutOffImgs,7)">
+      <img src="images/work/Cut off/cut_off_g3.jpg" alt="">
+      <div class="ghost-caption"><span class="ghost-caption-title">Cut Off 04, 2025</span><span class="ghost-caption-meta">Self made pigments, gold leaf, spirulina, pastels on canvas. 28 × 35 cm</span></div>
+    </div>
+  </div>
+  <div class="ghost-statement" style="padding-top:3.5rem;">
+    <p><span class="series-name">Cut Off</span><span class="series-body"> comes from an experimental and physical engagement with natural materials collected during the artist's process of immigration and search for new homes. Through this process, the paintings hold memories of the homeland of her childhood. Originally conceived as one large-scale painting, the work was later cut into twelve pieces, becoming what is now known as The Cut Off Series. The act of cutting reflects ideas of separation, displacement, and reconstruction. She paints on unprimed sailcloth laid directly on the floor, using self-made pigments from soils collected in different places, including Cap Canaille in Cassis, France, and Grünewald in Berlin, alongside spirulina, red cabbage, and shell dust. Working with natural and locally sourced materials, her practice stays closely connected to the textures and transformations of the natural world while maintaining a minimal environmental impact. Her palette recalls the shifting tones of the Caribbean Sea, mixed with the landscapes of the Dominican Republic, where she grew up, and the German forests where she has lived for over a decade. Rooted in nature, her work explores ideas of home, migration, memory, and sustainable ways of making art.</span></p>
+  </div>
+  <div style="border-top:0.5px solid var(--border);margin-top:2vw;"></div>
+</div>
+
+<!-- SERIES: Blind Frequencies -->
+<div id="page-series-blind" class="page inner">
+  <div class="series-page-back" onclick="showPage('work')">← Work</div>
+  <div class="ghost-sequence">
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(blindImgs,0)"><div class="ghost-item"><img src="images/work/Blind Frequencies/blind_g1.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Blind Frequency #1, 2025</span><span class="ghost-caption-meta">Pigments, pastel on paper</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(blindImgs,1)"><div class="ghost-item"><img src="images/work/Blind Frequencies/blind_g3.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Blind Frequency #2, 2025</span><span class="ghost-caption-meta">Pigments, pastel on paper, 113 × 115 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(blindImgs,2)"><div class="ghost-item"><img src="images/work/Blind Frequencies/archived_g2.webp" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Cap Canaille, 2025</span><span class="ghost-caption-meta">Soil, pastels, pigments on raw canvas, 80 × 60 cm</span></div></figure></div>
+  </div>
+</div>
+
+<!-- SERIES: The Good Sister -->
+<div id="page-series-paintings" class="page inner">
+  <div class="series-page-back" onclick="showPage('work')">← Work</div>
+  <div class="ghost-sequence">
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(paintingsImgs,0)"><div class="ghost-item"><img src="images/work/The good sister/archived_g4.webp" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Good Sister, 2024</span><span class="ghost-caption-meta">Pigments on canvas, 150 × 200 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(paintingsImgs,1)"><div class="ghost-item"><img src="images/work/The good sister/archived_g10.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Before the Fire, 2023</span><span class="ghost-caption-meta">Pigments on canvas, 110 × 130 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(paintingsImgs,2)"><div class="ghost-item"><img src="images/work/The good sister/archived_g11.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Housed Unconscious, 2024</span><span class="ghost-caption-meta">Pigments on canvas, 86 × 170 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(paintingsImgs,3)"><div class="ghost-item"><img src="images/work/The good sister/children milk_1_view_low.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Children's Milk, 2023</span><span class="ghost-caption-meta">Pigments, plaster on canvas, 130 × 165 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(paintingsImgs,4)"><div class="ghost-item"><img src="images/work/The good sister/archived_g14.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">She Wolf, 2023</span><span class="ghost-caption-meta">Pigments, plaster on canvas. 160 cm × 180 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(paintingsImgs,5)"><div class="ghost-item"><img src="images/work/The good sister/archived_g12.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Mother Peach Goes on Dates, 2023</span><span class="ghost-caption-meta">Gouache, airbrush on canvas, 80 × 100 cm</span></div></figure></div>
+  </div>
+</div>
+
+<!-- SERIES: Forest at Night -->
+<div id="page-series-forest" class="page inner">
+  <div class="series-page-back" onclick="showPage('work')">← Work</div>
+  <div class="ghost-sequence">
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(forestImgs,0)"><div class="ghost-item"><img src="images/work/Forest at Night/forest_g1.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Forest at Night, 2021 — Installation View</span><span class="ghost-caption-meta">Includes: Metal, ceramics, paintings and photography</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(forestImgs,1)"><div class="ghost-item"><img src="images/work/Forest at Night/FOREST_AT_NIGHT_ISTALLATIOB.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Forest at Night, 2021 — Installation View</span><span class="ghost-caption-meta">Includes: Metal, ceramics, paintings and photography</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(forestImgs,2)"><div class="ghost-item"><img src="images/work/Forest at Night/DSC00306-58.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">The Eye of the Magician, 2021</span><span class="ghost-caption-meta">Oil paint over paper mounted on board, 220 × 200 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(forestImgs,3)"><div class="ghost-item"><img src="images/work/Forest at Night/crying treeglazed ceramicmetal2021.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Crying Tree, 2021</span><span class="ghost-caption-meta">Glazed ceramic, metal</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(forestImgs,4)"><div class="ghost-item"><img src="images/work/Forest at Night/Swirl tree_glazed ceramic metal_2021.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Trees That Swirl, 2021</span><span class="ghost-caption-meta">Glazed ceramic, metal, 60 × 120 × 60 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(forestImgs,5)"><div class="ghost-item"><img src="images/work/Forest at Night/DSC00180-58.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Trees That Swirl, 2021</span><span class="ghost-caption-meta">Glazed ceramic, metal, 60 × 120 × 60 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(forestImgs,6)"><div class="ghost-item"><img src="images/work/Forest at Night/DSC00181-58.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Trees That Swirl, 2021</span><span class="ghost-caption-meta">Glazed ceramic, metal</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(forestImgs,7)"><div class="ghost-item"><img src="images/work/Forest at Night/DSC00385-58.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Handless Maiden, 2021</span><span class="ghost-caption-meta">Glazed ceramic, metal, 28 × 170 × 40 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(forestImgs,8)"><div class="ghost-item"><img src="images/work/Forest at Night/MP_Guiselt_7068 copy.jpeg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Mushroom Coral Vase, 2021</span><span class="ghost-caption-meta">Glazed ceramic, 40 × 35 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(forestImgs,9)"><div class="ghost-item"><img src="images/work/Forest at Night/MP_Guiselt_7039 copy.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Alien's Egg, 2021</span><span class="ghost-caption-meta">Glazed ceramic, 50 × 53 × 54 cm</span></div></figure></div>
+  </div>
+  <div class="ghost-statement">
+    <p><span class="series-name">Forest at Night</span><span class="series-body"> is a multi-disciplinary installation that includes paintings, sculptures and poetry encased by a vivid blue wall paint, nostalgic of the facades of Caribbean houses of her youth. Captivated by the twisting forms of the trees and their resemblance to the human body, Thaiz explores the relationship between humankind and nature, including the Anthropocene, mythology, fairy tales, spirituality, and the nature of womanhood; themes still present in her work today.</span></p>
+  </div>
+</div>
+
+<!-- SERIES: Eye of the Crab -->
+<div id="page-series-crab" class="page inner">
+  <div class="series-page-back" onclick="showPage('work')">← Work</div>
+  <div class="ghost-sequence">
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(crabImgs,0)"><div class="ghost-item"><img src="images/work/Eye of the Crab/archived_g13.png" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Eye of the Crab, 2020</span><span class="ghost-caption-meta">Acrylic on canvas, 135 × 160 cm</span></div></figure></div>
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(crabImgs,1)"><div class="ghost-item"><img src="images/work/Eye of the Crab/FLOWER_ARE_NOT_ROMANCE_oiloncanvas+160cm+x+140cm.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Flowers are not Romance, 2022</span><span class="ghost-caption-meta">Oil on canvas, 160 × 140 cm</span></div></figure></div>
+  </div>
+</div>
+
+<!-- SERIES: Jay Chews Her Gum -->
+<div id="page-series-jay" class="page inner">
+  <div class="series-page-back" onclick="showPage('work')">← Work</div>
+  <div class="ghost-sequence">
+    <div class="ghost-row"><figure class="ghost-figure" onclick="openLightbox(jayImgs,0)"><div class="ghost-item"><img src="images/work/jay chews her gum/bubblegumchairweb.jpg" alt=""></div><div class="ghost-caption"><span class="ghost-caption-title">Jay Chews Her Gum, 2015</span><span class="ghost-caption-meta">Bubble gum over metal chair, 90 × 40 × 50 cm</span></div></figure></div>
+  </div>
+</div>
+
+
+<!-- PROJECT DETAIL -->
+<div id="page-project" class="page inner">
+  <div class="project-header"><h1 class="project-title" id="proj-title"></h1></div>
+  <div class="project-images" id="proj-images"></div>
+</div>
+
+<!-- INFORMATION -->
+<div id="page-information" class="page inner">
+
+  <!-- Fixed background portrait (viewport-centered, doesn't scroll) -->
+  <div id="info-portrait-bg">
+    <figure class="ghost-figure info-portrait-figure" onclick="openLightbox(infoImgs,0)" style="cursor:zoom-in;">
+      <div class="ghost-item"><img src="images/information/portraitwithrocks.jpg" alt="Guiselt Thaiz"></div>
+      <div class="ghost-caption info-portrait-caption-wrap">
+        <span class="ghost-caption-title">'At work', 2018.</span>
+        <span class="ghost-caption-meta">Inkjet on paper. 50 cm × 40 cm.</span>
+      </div>
+    </figure>
+  </div>
+
+  <div class="info-page">
+    <div class="info-main-layout">
+      <div class="info-left">
+    
+    <!-- CV -->
+    <div class="info-cv">
+<p class="info-bio-text">Born in NYC, grew up in Dominican Republic.<br>Lives between NYC &amp; Berlin.<br><br></p>
+
+      <div class="info-cv-block">
+        <h4 class="info-cv-cat">Education</h4>
+        <div class="info-cv-row"><span class="info-cv-year">2021</span><span class="info-cv-text">Master's &amp; Bachelor's degree, Fine Arts <br>Painting, Sculpture, Contemporary Media <br>University of Arts Berlin (UdK), Germany.<br><span class="info-cv-sub">.</span></span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2010</span><span class="info-cv-text">The New York Art Student League, Drawing  <br>New York, United States.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2005</span><span class="info-cv-text">Bachelor's of Arts, Visual Communication <br> Altos de Chavón School of Design <br>Dominican Republic.<br> </span></div>
+      </div>
+
+      <div class="info-cv-block">
+        <h4 class="info-cv-cat">Exhibitions</h4>
+        <div class="info-cv-row"><span class="info-cv-year">2025</span><span class="info-cv-text">'Now or Never' Exhibition, Limited Girl Berlin.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2024</span><span class="info-cv-text">'Sweet Spot' Exhibition, Galerie Met, Berlin.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2023</span><span class="info-cv-text">Graphic Discontent, Acud Macht Neu, Berlin.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2022</span><span class="info-cv-text">Positions Art Fair, Maus Contemporary Gallery, Berlin.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2022</span><span class="info-cv-text">'Pretty in Pink' group Exhibition, Schau Fenster Gallery, Berlin.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2021</span><span class="info-cv-text">Haus am Kleistpark, The President's Fine Arts Award, Exhibition, Berlin.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2021</span><span class="info-cv-text">'It's Only the End' Exhibition, Kühlhaus, Berlin.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2021</span><span class="info-cv-text">UdK — Rundgang Exhibition, Berlin.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2021</span><span class="info-cv-text">'Online Art Auction', group Exhibition, Weserhalle Gallery, Berlin.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2020</span><span class="info-cv-text">'Online Art Auction', group Exhibition, Weserhalle Gallery, Berlin.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2019</span><span class="info-cv-text">'Online Art Auction', group Exhibition, Weserhalle Gallery, Berlin.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2019</span><span class="info-cv-text">UdK — Rundgang Exhibition, Berlin.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2018</span><span class="info-cv-text">'Frozen Moments' group Exhibition, Museum Sayn, Sayn, Germany.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2018</span><span class="info-cv-text">'West Germany', group Exhibition, Berlin.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2018</span><span class="info-cv-text">'Weserhalle 1st Spring Auction', group Exhibition, Weserhalle Galerie, Berlin.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2017</span><span class="info-cv-text">'Rundgang UdK' group Exhibition, Universität der Kunst Berlin.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2016</span><span class="info-cv-text">'Rundgang UdK' group Exhibition, Universität der Kunst Berlin.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2015</span><span class="info-cv-text">Lemonade Stand, Exhibition, New York, NY.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2014</span><span class="info-cv-text">'Salonukah' group Exhibition, Trestle Gallery, Brooklyn, NY.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2014</span><span class="info-cv-text">'Live Free or Die', solo Exhibition, La Alpargateria Art Space, Dominican Republic.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2014</span><span class="info-cv-text">Experior: 'Try, Test, Experience', group Exhibition, Rosa Gitana Gallery, Brooklyn, NY.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2013</span><span class="info-cv-text">'Seeking Space', group Exhibition, Art in Bushwick, Brooklyn, NY.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2013</span><span class="info-cv-text">'Portraits', Solo Show, 192 Mott St., NY.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2013</span><span class="info-cv-text">Raw Artist Exhibition, Brooklyn, NY.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2012</span><span class="info-cv-text">The Reading Project, NY — selection of short stories.</span></div>
+      </div>
+
+      <div class="info-cv-block">
+        <h4 class="info-cv-cat">Features</h4>
+        <div class="info-cv-row"><span class="info-cv-year">2013</span><span class="info-cv-text">Towheads film, Shannon Plums — Premiere screening at MoMA, The Film Society of Lincoln Center, NYC.</span></div>
+      </div>
+
+      <div class="info-cv-block">
+        <h4 class="info-cv-cat">Grants</h4>
+        <div class="info-cv-row"><span class="info-cv-year">2022</span><span class="info-cv-text">Stiftung Kunstfonds.</span></div>
+      </div>
+
+      <div class="info-cv-block">
+        <h4 class="info-cv-cat">Prizes</h4>
+        <div class="info-cv-row"><span class="info-cv-year">2021</span><span class="info-cv-text">Preis des Präsidenten der UdK Berlin.</span></div>
+      </div>
+
+      <div class="info-cv-block">
+        <h4 class="info-cv-cat">Publications</h4>
+        <div class="info-cv-row"><span class="info-cv-year">2024</span><span class="info-cv-text">Artsy.net, Marketplace, USA.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2024</span><span class="info-cv-text">Artrabbit.com, USA.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2024</span><span class="info-cv-text">VisitBerlin, Berlin.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2024</span><span class="info-cv-text">Cilens, China.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2021</span><span class="info-cv-text">Tagesspiegel Newspaper, Art &amp; Culture section, front page article, Germany.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2018</span><span class="info-cv-text">'Season Five' — An Assortment of Contributions on Themes of Land, Art, and Commons.</span></div>
+        <div class="info-cv-row"><span class="info-cv-year">2012</span><span class="info-cv-text">'The Reading Project', NY — selection of short stories.</span></div>
+      </div>
+
+      <div class="info-cv-block">
+        <h4 class="info-cv-cat">Residencies</h4>
+        <div class="info-cv-row"><span class="info-cv-year">2018</span><span class="info-cv-text">Nuance, Museum Sayn, Sayn, Germany.</span></div>
+      </div>
+
+    </div><!-- /info-cv -->
+      </div><!-- /info-left -->
+
+    </div><!-- /info-main-layout -->
+  </div><!-- /info-page -->
+</div>
+
+<!-- CONTACT -->
+<div id="page-contact" class="page inner">
+  <div class="contact-minimal">
+    <a href="mailto:guiselt.thaiz@gmail.com" class="contact-link">guiselt.thaiz@gmail.com</a>
+    <a href="https://instagram.com/guiseltthaiz" target="_blank" class="contact-link">@guiseltthaiz</a>
+    <div class="contact-img-wrap">
+      <figure class="ghost-figure contact-figure" onclick="openLightbox(contactImgs,0)" style="cursor:zoom-in;">
+        <div class="ghost-item"><img src="images/contact/forest_g6.png" alt=""></div>
+        <div class="ghost-caption contact-caption">
+          <span class="ghost-caption-title">Bird me, 2020.</span>
+          <span class="ghost-caption-meta">Inkjet on paper. 50 cm × 40 cm.</span>
+        </div>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<script>
+var contactImgs=["images/contact/forest_g6.png"];
+var infoImgs=["images/information/portraitwithrocks.jpg"];
+var ghostImgs=[
+  "images/work/Ghost Bitch/ghost_main.jpg","images/work/Ghost Bitch/ghost_g3.jpg","images/work/Ghost Bitch/ghost_g1.jpg",
+  "images/work/Ghost Bitch/ghost_g2.jpg","images/work/Ghost Bitch/ghost_g4.jpg","images/work/Ghost Bitch/ghost_g5.jpg",
+  "images/work/Ghost Bitch/ghost_g6.jpg","images/work/Ghost Bitch/ghost_g7.jpg","images/work/Ghost Bitch/ghost_g8.jpg","images/work/Ghost Bitch/ghost_g9.jpg"
+];
+
+var cutOffImgs=[
+  "images/work/Cut off/guiselt_thaiz_Cut_Off_01_28cmx35cm.jpeg","images/work/Cut off/guiselt_thaiz_Cut_Off_07_28cmx35cm.jpeg.jpeg",
+  "images/work/Cut off/guiselt_thaiz_Cut_Off_08_28cmx35cm.jpeg.jpeg","images/work/Cut off/guiselt_thaiz_Cut_Off_10_28cmx35cm.jpeg.jpeg",
+  "images/work/Cut off/cut_off_main.jpg","images/work/Cut off/cut_off_g4.jpg",
+  "images/work/Cut off/cut_off_g6.jpg","images/work/Cut off/cut_off_g3.jpg"
+];
+
+var vailedImgs=[
+  "images/work/Ghost Bitch/TWO_VAILED_FIGURE1.jpg","images/work/Ghost Bitch/TWO_VAILED_FIGURE2.jpg","images/work/Ghost Bitch/image-asset.jpeg"
+];
+
+var blindImgs=[
+  "images/work/Blind Frequencies/blind_g1.jpg","images/work/Blind Frequencies/blind_g3.jpg","images/work/Blind Frequencies/archived_g2.webp"
+];
+
+var paintingsImgs=[
+  "images/work/The good sister/archived_g4.webp","images/work/The good sister/archived_g10.jpg","images/work/The good sister/archived_g11.jpg",
+  "images/work/The good sister/children milk_1_view_low.jpg",
+  "images/work/The good sister/archived_g14.jpg","images/work/The good sister/archived_g12.jpg"
+];
+
+var forestImgs=[
+  "images/work/Forest at Night/forest_g1.jpg","images/work/Forest at Night/FOREST_AT_NIGHT_ISTALLATIOB.jpg",
+  "images/work/Forest at Night/DSC00306-58.jpg",
+  "images/work/Forest at Night/crying treeglazed ceramicmetal2021.jpg",
+  "images/work/Forest at Night/Swirl tree_glazed ceramic metal_2021.jpg","images/work/Forest at Night/DSC00180-58.jpg","images/work/Forest at Night/DSC00181-58.jpg",
+  "images/work/Forest at Night/DSC00385-58.jpg",
+  "images/work/Forest at Night/MP_Guiselt_7068 copy.jpeg","images/work/Forest at Night/MP_Guiselt_7039 copy.jpg"
+];
+
+var crabImgs=[
+  "images/work/Eye of the Crab/archived_g13.png",
+  "images/work/Eye of the Crab/FLOWER_ARE_NOT_ROMANCE_oiloncanvas+160cm+x+140cm.jpg"
+];
+
+var jayImgs=["images/work/jay chews her gum/bubblegumchairweb.jpg"];
+
+/* ── LIGHTBOX ── */
+var lbImages=[],lbIndex=0;
+var lbScale=1,lbTx=0,lbTy=0;
+var lbDragging=false,lbDragStartX=0,lbDragStartY=0,lbDragOriginTx=0,lbDragOriginTy=0;
+var lbHintTimer=null;
+
+var lbImg=document.getElementById('lightbox-img');
+var lbWrap=document.getElementById('lb-zoom-wrap');
+var lbBox=document.getElementById('lightbox');
+var lbHintEl=document.getElementById('lb-hint');
+var lbResetEl=document.getElementById('lb-reset');
+
+function applyTransform(){
+  lbImg.style.transform='scale('+lbScale+') translate('+(lbTx/lbScale)+'px,'+(lbTy/lbScale)+'px)';
+  lbResetEl.classList.toggle('visible',lbScale>1.01);
+}
+
+function resetZoom(){
+  lbScale=1;lbTx=0;lbTy=0;
+  lbImg.style.transition='transform 0.22s ease';
+  applyTransform();
+  setTimeout(function(){lbImg.style.transition='none';},240);
+}
+
+function clampPan(){
+  if(lbScale<=1){lbTx=0;lbTy=0;return;}
+  var iw=lbImg.clientWidth*lbScale, ih=lbImg.clientHeight*lbScale;
+  var maxX=Math.max(0,(iw-lbWrap.clientWidth)/2);
+  var maxY=Math.max(0,(ih-lbWrap.clientHeight)/2);
+  lbTx=Math.max(-maxX,Math.min(maxX,lbTx));
+  lbTy=Math.max(-maxY,Math.min(maxY,lbTy));
+}
+
+function showHint(){
+  lbHintEl.classList.remove('hidden');
+  clearTimeout(lbHintTimer);
+  lbHintTimer=setTimeout(function(){lbHintEl.classList.add('hidden');},3000);
+}
+
+function openLightbox(imgs,idx){
+  lbImages=imgs;lbIndex=idx;
+  lbImg.src=lbImages[lbIndex];
+  resetZoom();
+  lbBox.classList.add('open');
+  document.body.style.overflow='hidden';
+  showHint();
+}
+
+function closeLightboxDirect(){
+  lbBox.classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function lightboxNav(dir){
+  lbIndex=(lbIndex+dir+lbImages.length)%lbImages.length;
+  lbImg.src=lbImages[lbIndex];
+  resetZoom();
+}
+
+document.getElementById('lb-close').addEventListener('click',closeLightboxDirect);
+document.getElementById('lb-prev').addEventListener('click',function(e){e.stopPropagation();lightboxNav(-1);});
+document.getElementById('lb-next').addEventListener('click',function(e){e.stopPropagation();lightboxNav(1);});
+lbResetEl.addEventListener('click',function(e){e.stopPropagation();resetZoom();});
+
+/* click white backdrop to close when not zoomed */
+lbBox.addEventListener('click',function(e){
+  if(e.target===lbBox&&lbScale<=1.01)closeLightboxDirect();
+});
+
+/* ── Mouse wheel zoom (toward cursor) ── */
+lbWrap.addEventListener('wheel',function(e){
+  e.preventDefault();
+  var factor=e.deltaY<0?1.13:0.88;
+  var newScale=Math.max(1,Math.min(8,lbScale*factor));
+  var rect=lbWrap.getBoundingClientRect();
+  var cx=e.clientX-rect.left-rect.width/2;
+  var cy=e.clientY-rect.top-rect.height/2;
+  lbTx=cx+(lbTx-cx)*(newScale/lbScale);
+  lbTy=cy+(lbTy-cy)*(newScale/lbScale);
+  lbScale=newScale;
+  clampPan();applyTransform();
+},{passive:false});
+
+/* ── Mouse drag to pan ── */
+lbWrap.addEventListener('mousedown',function(e){
+  if(lbScale<=1)return;
+  lbDragging=true;lbWrap.classList.add('dragging');
+  lbDragStartX=e.clientX;lbDragStartY=e.clientY;
+  lbDragOriginTx=lbTx;lbDragOriginTy=lbTy;
+  e.preventDefault();
+});
+window.addEventListener('mousemove',function(e){
+  if(!lbDragging)return;
+  lbTx=lbDragOriginTx+(e.clientX-lbDragStartX);
+  lbTy=lbDragOriginTy+(e.clientY-lbDragStartY);
+  clampPan();applyTransform();
+});
+window.addEventListener('mouseup',function(){lbDragging=false;lbWrap.classList.remove('dragging');});
+
+/* ── Touch pinch-zoom + pan ── */
+var _t=[],_pd=0,_s0=1,_tx0=0,_ty0=0,_m0={x:0,y:0};
+function tDist(a,b){return Math.hypot(b.clientX-a.clientX,b.clientY-a.clientY);}
+lbWrap.addEventListener('touchstart',function(e){
+  _t=Array.from(e.touches);
+  if(_t.length===2){
+    _pd=tDist(_t[0],_t[1]);_s0=lbScale;_tx0=lbTx;_ty0=lbTy;
+    var r=lbWrap.getBoundingClientRect();
+    _m0={x:(_t[0].clientX+_t[1].clientX)/2-r.left-r.width/2,
+         y:(_t[0].clientY+_t[1].clientY)/2-r.top-r.height/2};
+  }else if(_t.length===1){
+    lbDragStartX=_t[0].clientX;lbDragStartY=_t[0].clientY;
+    lbDragOriginTx=lbTx;lbDragOriginTy=lbTy;
+  }
+  e.preventDefault();
+},{passive:false});
+lbWrap.addEventListener('touchmove',function(e){
+  var t=Array.from(e.touches);
+  if(t.length===2&&_t.length>=2){
+    var d=tDist(t[0],t[1]),ns=Math.max(1,Math.min(8,_s0*(d/_pd)));
+    lbTx=_m0.x+(_tx0-_m0.x)*(ns/_s0);
+    lbTy=_m0.y+(_ty0-_m0.y)*(ns/_s0);
+    lbScale=ns;clampPan();applyTransform();
+  }else if(t.length===1&&lbScale>1){
+    lbTx=lbDragOriginTx+(t[0].clientX-lbDragStartX);
+    lbTy=lbDragOriginTy+(t[0].clientY-lbDragStartY);
+    clampPan();applyTransform();
+  }
+  e.preventDefault();
+},{passive:false});
+lbWrap.addEventListener('touchend',function(e){_t=Array.from(e.touches);});
+
+/* ── Keyboard ── */
+document.addEventListener('keydown',function(e){
+  if(!lbBox.classList.contains('open'))return;
+  if(e.key==='Escape'){closeLightboxDirect();return;}
+  if(e.key==='ArrowRight')lightboxNav(1);
+  if(e.key==='ArrowLeft')lightboxNav(-1);
+  if(e.key==='+'||e.key==='='){lbScale=Math.min(8,lbScale*1.2);clampPan();applyTransform();}
+  if(e.key==='-'){lbScale=Math.max(1,lbScale/1.2);clampPan();applyTransform();}
+  if(e.key==='0')resetZoom();
+});
+
+/* ── CUT OFF SLIDESHOW ── */
+(function(){
+  var slides, total, current, timer;
+
+  function init(){
+    slides = document.querySelectorAll('.cutoff-slide');
+    total  = slides.length;
+    current = 0;
+    updateCounter();
+    startAuto();
+
+    var ss = document.getElementById('cutoff-slideshow');
+    if(ss){
+      ss.addEventListener('mouseenter', stopAuto);
+      ss.addEventListener('mouseleave', startAuto);
+    }
+  }
+
+  function goTo(n){
+    slides[current].classList.remove('active');
+    current = (n + total) % total;
+    slides[current].classList.add('active');
+    updateCounter();
+  }
+
+  function updateCounter(){
+    var el = document.getElementById('cutoff-counter');
+    if(el) el.textContent = (current+1) + ' / ' + total;
+  }
+
+  function startAuto(){
+    stopAuto();
+    timer = setInterval(function(){ goTo(current+1); }, 2500);
+  }
+
+  function stopAuto(){ clearInterval(timer); }
+
+  window.cutoffGo = function(dir){ stopAuto(); goTo(current+dir); startAuto(); };
+
+  /* re-init when Cut Off page becomes active */
+  var observer = new MutationObserver(function(muts){
+    muts.forEach(function(m){
+      if(m.target.id==='page-series-cutoff' && m.target.classList.contains('active')){
+        init();
+      }
+    });
+  });
+  var cutoffPage = document.getElementById('page-series-cutoff');
+  if(cutoffPage) observer.observe(cutoffPage, {attributes:true, attributeFilter:['class']});
+
+  /* also init if already active on load */
+  if(cutoffPage && cutoffPage.classList.contains('active')) init();
+})();
+function setNavColour(page){
+  var nav=document.getElementById('main-nav'),name=document.getElementById('nav-name');
+  if(page==='home'){nav.classList.add('on-dark');name.classList.add('on-dark');}
+  else{nav.classList.remove('on-dark');name.classList.remove('on-dark');}
+}
+
+/* ── Core display (no history push) ── */
+function _displayPage(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.nav-links a').forEach(function(a){a.classList.remove('active');});
+  document.getElementById('page-'+name).classList.add('active');
+  var el=document.getElementById('nav-'+name);
+  if(el)el.classList.add('active');
+  window.scrollTo(0,0);
+  setNavColour(name);
+}
+
+function _displaySeries(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.nav-links a').forEach(function(a){a.classList.remove('active');});
+  document.getElementById('page-series-'+name).classList.add('active');
+  document.getElementById('nav-work').classList.add('active');
+  window.scrollTo(0,0);
+  setNavColour('series');
+}
+
+/* ── Public navigation (pushes history) ── */
+function showPage(name){
+  history.pushState({type:'page',name:name},'','#'+name);
+  _displayPage(name);
+}
+
+function showSeries(name){
+  history.pushState({type:'series',name:name},'','#work/'+name);
+  _displaySeries(name);
+}
+
+/* ── Back/forward ── */
+window.addEventListener('popstate',function(e){
+  var state=e.state;
+  if(state){
+    if(state.type==='series') _displaySeries(state.name);
+    else _displayPage(state.name);
+  } else {
+    /* fallback: parse hash */
+    var hash=location.hash.replace('#','');
+    if(hash.indexOf('work/')===0){
+      _displaySeries(hash.replace('work/',''));
+    } else if(hash){
+      _displayPage(hash);
+    } else {
+      _displayPage('home');
+    }
+  }
+});
+
+/* ── Initial load: read hash or default to home ── */
+(function(){
+  var hash=location.hash.replace('#','');
+  if(hash.indexOf('work/')===0){
+    var series=hash.replace('work/','');
+    history.replaceState({type:'series',name:series},'',location.href);
+    _displaySeries(series);
+  } else if(hash && document.getElementById('page-'+hash)){
+    history.replaceState({type:'page',name:hash},'',location.href);
+    _displayPage(hash);
+  } else {
+    history.replaceState({type:'page',name:'home'},'','#home');
+    _displayPage('home');
+  }
+})();
+</script>
+</body>
+</html>
