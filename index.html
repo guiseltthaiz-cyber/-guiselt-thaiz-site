@@ -86,6 +86,7 @@
     --font-body:'Cormorant Garamond','Cormorant',Georgia,serif;
   }
   html{scroll-behavior:smooth}
+  html, body{ overflow-x:hidden; max-width:100%; }
   body{
     font-family:var(--font-body);
     font-weight:400;
@@ -326,7 +327,7 @@
   .contact-minimal{display:flex;flex-direction:column;align-items:center;padding-top:3.5rem;gap:0.55rem;}
   .contact-link{font-family:var(--font-body);font-weight:400;font-style:normal;font-size:18px;color:var(--black);text-decoration:none;line-height:1.6;}
   .contact-link:hover{opacity:0.45;}
-  .contact-img-wrap{margin-top:1.6rem;width:403px;margin-left:calc(50% - 201px + 25px);margin-right:auto;}
+  .contact-img-wrap{margin-top:1.6rem;width:403px;max-width:88vw;margin-left:auto;margin-right:auto;text-align:center;}
   .contact-img-wrap img{width:100%;height:auto;display:block;}
   .contact-img-caption{
     display:block;
@@ -450,6 +451,15 @@
     .cv-year{ min-width:auto; }
 
     /* Contact grid → single column */
+
+    /* Series pages: image boxes were forced to a full 100vh height, which
+       left a big empty gap under shorter/wider images before the caption.
+       On mobile let the box height follow the image's own aspect ratio. */
+    .ghost-sequence .ghost-figure{ width:100%; }
+    .ghost-sequence .ghost-item{ height:auto; max-height:70vh; }
+    .ghost-sequence .ghost-item img{
+      width:100%; height:auto; max-height:70vh; max-width:100%; margin:0;
+    }
   }
 
   /* ── INFORMATION PAGE ─────────────────────── */
@@ -550,8 +560,20 @@
     .info-page{ margin-right:calc(48vw + 3vw); margin-left:3vw; }
   }
   @media(max-width:640px){
-    #info-portrait-bg{ display:none !important; }
-    .info-page{ margin-right:4vw; margin-left:4vw; padding:2.5rem 0 5rem; }
+    #info-portrait-bg{
+      display:flex !important;
+      position:static;
+      width:60vw;
+      max-width:320px;
+      margin:2.2rem auto 2rem;
+      right:auto; top:auto; bottom:auto; z-index:auto;
+    }
+    #page-information.active #info-portrait-bg{ display:flex !important; }
+    .info-page{ margin-right:7vw; margin-left:7vw; padding:1rem 0 5rem; }
+    .info-bio-text,
+    .info-cv-year,
+    .info-cv-text{ font-size:14px; line-height:1.6; }
+    .info-cv-row{ grid-template-columns:44px 1fr; gap:1rem; }
   }
 
   @media (max-width:480px){
